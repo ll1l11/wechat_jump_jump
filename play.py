@@ -11,10 +11,12 @@ import random
 # numpy 1.13.3
 # 用到了opencv库中的模板匹配和边缘检测功能
 
+ADB_LOCATION = '/Users/codeif/Library/Android/sdk/platform-tools/adb'
+
 
 def get_screenshot(id):
-    os.system('adb shell screencap -p /sdcard/%s.png' % str(id))
-    os.system('adb pull /sdcard/%s.png .' % str(id))
+    os.system(f'{ADB_LOCATION} shell screencap -p /sdcard/{id}.png')
+    os.system(f'{ADB_LOCATION} pull /sdcard/{id}.png .')
 
 
 def jump(distance):
@@ -24,8 +26,7 @@ def jump(distance):
     # 生成随机手机屏幕模拟触摸点
     # 模拟触摸点如果每次都是同一位置，成绩上传可能无法通过验证
     rand = random.randint(0, 9) * 10
-    cmd = ('adb shell input swipe %i %i %i %i ' + str(press_time)) \
-          % (320 + rand, 410 + rand, 320 + rand, 410 + rand)
+    cmd = (f'{ADB_LOCATION} shell input swipe {320 + rand} {410 + rand} {320 + rand} {410 + rand} {str(press_time)}')
     os.system(cmd)
     print(cmd)
 
